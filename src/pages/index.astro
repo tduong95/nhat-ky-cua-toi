@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPosts, url } from '../utils';
+const posts = await getPosts();
+const featured = posts.filter((p) => p.data.featured);
+const shown = (featured.length ? featured : posts).slice(0, 6);
+---
+<Layout>
+  <section class="hero">
+    <h1>Nhật ký của tôi</h1>
+    <p>Ảnh, chuyện nhỏ và những chuyến đi — nơi mình lưu lại những khoảnh khắc muốn chia sẻ.</p>
+  </section>
+  <section aria-labelledby="moi">
+    <h2 class="section" id="moi">Bài viết nổi bật</h2>
+    <div class="grid">{shown.map((post) => <PostCard post={post} />)}</div>
+    <p><a class="more" href={url('bai-viet/')}>Xem tất cả bài viết →</a></p>
+  </section>
+  <section class="about" id="gioi-thieu" aria-labelledby="gt">
+    <h2 id="gt">Giới thiệu</h2>
+    <p>Xin chào! Đây là góc nhỏ để mình viết và chia sẻ hình ảnh. Bạn hãy sửa đoạn giới thiệu này trong <code>src/pages/index.astro</code>.</p>
+  </section>
+</Layout>

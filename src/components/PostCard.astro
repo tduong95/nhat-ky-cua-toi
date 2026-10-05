@@ -1,0 +1,16 @@
+---
+import { formatDate, url } from '../utils';
+const { post } = Astro.props;
+const { title, date, description, cover, coverAlt } = post.data;
+---
+<article class="card">
+  <a href={url(`bai-viet/${post.id}/`)} class="card-img" tabindex="-1" aria-hidden="true">
+    <img src={url(cover)} alt="" loading="lazy" width="800" height="560" />
+  </a>
+  <div class="card-body">
+    <time datetime={date.toISOString()}>{formatDate(date)}</time>
+    <h3><a href={url(`bai-viet/${post.id}/`)}>{title}</a></h3>
+    <p>{description}</p>
+    <a class="more" href={url(`bai-viet/${post.id}/`)} aria-label={`Đọc tiếp: ${title}`}>Đọc tiếp →</a>
+  </div>
+</article>

@@ -1,0 +1,32 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getPosts, formatDate, url } from '../../utils';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, date, description, cover, coverAlt, gallery } = post.data;
+---
+<Layout title={title} description={description}>
+  <article class="article">
+    <p class="meta"><time datetime={date.toISOString()}>{formatDate(date)}</time></p>
+    <h1>{title}</h1>
+    <img class="cover" src={url(cover)} alt={coverAlt} width="1200" height="800" />
+    <div class="prose"><Content /></div>
+    {gallery.length > 0 && (
+      <div class="gallery">
+        {gallery.map((g) => (
+          <figure>
+            <img src={url(g.src)} alt={g.alt} loading="lazy" width="800" height="600" />
+            {g.caption && <figcaption>{g.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    )}
+    <a class="back" href={url('bai-viet/')}>← Tất cả bài viết</a>
+  </article>
+</Layout>
