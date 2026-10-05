@@ -1,0 +1,29 @@
+---
+import '../styles/global.css';
+import { url } from '../utils';
+const { title, description = 'Ảnh, chuyện nhỏ và những chuyến đi.' } = Astro.props;
+const full = title ? `${title} · Nhật ký của tôi` : 'Nhật ký của tôi';
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#noi-dung">Bỏ qua đến nội dung</a>
+    <header class="site-header">
+      <a class="logo" href={url('')}>nhật ký của tôi</a>
+      <nav aria-label="Điều hướng chính">
+        <a href={url('')}>Trang chủ</a>
+        <a href={url('bai-viet/')}>Bài viết</a>
+        <a href={url('#gioi-thieu')}>Giới thiệu</a>
+      </nav>
+    </header>
+    <main id="noi-dung"><slot /></main>
+    <footer class="site-footer">© {new Date().getFullYear()} · Nhật ký của tôi · Làm bằng Astro</footer>
+  </body>
+</html>

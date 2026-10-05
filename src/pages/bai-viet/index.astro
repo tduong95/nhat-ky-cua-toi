@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../utils';
+const posts = await getPosts();
+---
+<Layout title="Bài viết" description="Tất cả bài viết trong nhật ký.">
+  <h1 class="section" style="font:700 2.2rem Georgia,serif;margin-top:3rem">Tất cả bài viết</h1>
+  <div class="grid">{posts.map((post) => <PostCard post={post} />)}</div>
+</Layout>
